@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.Build;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -41,6 +43,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.PrivateKey;
 import java.util.List;
 
 import ptk111.com.tugas34.Database.LokasiUser;
@@ -71,8 +74,9 @@ public class MainActivity extends AppCompatActivity
     private Marker user;
     private final int id = 1;
     private final int id2 = 2;
-    JSONArray arrayUser;
-    LokasiUser lokasiUser = new LokasiUser();
+    private JSONArray arrayUser;
+    private LokasiUser lokasiUser = new LokasiUser();
+    //private final int idDB;
 
     private static final long GEO_DURATION = 60 * 60 * 1000;
     private static final String GEOFENCE_REQ_ID = "My Geofence";
@@ -90,28 +94,37 @@ public class MainActivity extends AppCompatActivity
         textLat = (TextView) findViewById(R.id.lat);
         textLong = (TextView) findViewById(R.id.lon);
 
+        if(Build.VERSION.SDK_INT > 9){
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         // initialize GoogleMaps
         initGMaps();
         createGoogleApi();
-        tampilLokasi();
+        tampilLokasi2();
 
 
     }
 
-    private void tampilLokasi(){
+
+    private void tampilLokasi2(){
+
+
         try {
 
             arrayUser = new JSONArray(lokasiUser.tampilLokasi());
 
             for (int i = 0; i < arrayUser.length(); i++) {
                 JSONObject jsonChildNode = arrayUser.getJSONObject(i);
-                String latitude = jsonChildNode.optString("latitude");
-                String longitude = jsonChildNode.optString("longitude");
-                String id = jsonChildNode.optString("id");
+                Integer idDB = jsonChildNode.optInt("id");
+                Double latitude = jsonChildNode.optDouble("latitude");
+                Double longitude = jsonChildNode.optDouble("longitude");
 
+                System.out.println("ID :" + idDB);
                 System.out.println("latitude :" + latitude);
                 System.out.println("longitude :" + longitude);
-                System.out.println("ID :" + id);
+
             }
         }catch (JSONException e) {
             e.printStackTrace();
