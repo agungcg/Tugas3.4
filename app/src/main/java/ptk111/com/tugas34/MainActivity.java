@@ -76,6 +76,10 @@ public class MainActivity extends AppCompatActivity
     private final int id2 = 2;
     private JSONArray arrayUser;
     private LokasiUser lokasiUser = new LokasiUser();
+    private int[] listId = new int[100];
+    private double[] listLatitude = new double[100];
+    private double[] listLongitude = new double[100];
+
     //private final int idDB;
 
     private static final long GEO_DURATION = 60 * 60 * 1000;
@@ -110,6 +114,9 @@ public class MainActivity extends AppCompatActivity
 
     private void tampilLokasi2(){
 
+        int id = 0;
+        double latitude = 0;
+        double longitude = 0;
 
         try {
 
@@ -117,13 +124,23 @@ public class MainActivity extends AppCompatActivity
 
             for (int i = 0; i < arrayUser.length(); i++) {
                 JSONObject jsonChildNode = arrayUser.getJSONObject(i);
-                Integer idDB = jsonChildNode.optInt("id");
-                Double latitude = jsonChildNode.optDouble("latitude");
-                Double longitude = jsonChildNode.optDouble("longitude");
+                id = jsonChildNode.optInt("id");
+                latitude = jsonChildNode.optDouble("latitude");
+                longitude = jsonChildNode.optDouble("longitude");
 
-                System.out.println("ID :" + idDB);
+                listId[i]= id;
+                listLatitude[i]= latitude;
+                listLongitude[i]= longitude;
+
+                /*
+                System.out.println("ID :" + id);
                 System.out.println("latitude :" + latitude);
                 System.out.println("longitude :" + longitude);
+                */
+                
+                System.out.println("ID :" + listId[i]);
+                System.out.println("latitude :" + listLatitude[i]);
+                System.out.println("longitude :" + listLongitude[i]);
 
             }
         }catch (JSONException e) {
