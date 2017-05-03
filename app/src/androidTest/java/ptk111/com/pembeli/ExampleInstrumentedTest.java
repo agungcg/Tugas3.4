@@ -1,4 +1,4 @@
-package ptk111.com.tugas34;
+package ptk111.com.pembeli;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

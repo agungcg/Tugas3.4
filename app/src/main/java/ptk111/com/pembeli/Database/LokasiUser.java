@@ -1,4 +1,4 @@
-package ptk111.com.tugas34.Database;
+package ptk111.com.pembeli.Database;
 
 /**
  * Created by ptk111 on 4/25/2017.
@@ -10,10 +10,20 @@ public class LokasiUser extends Koneksi {
     String url = "";
     String response = "";
 
-    public String tampilLokasi() {
+    public String tampilLokasiPedagang() {
         try {
-            url = URL + "?operasi=view";
-            System.out.println("URL Tampil Lokasi: " + url);
+            url = URL + "?operasi=viewPedagang";
+            System.out.println("URL Tampil Lokasi Pedagang: " + url);
+            response = call(url);
+        } catch (Exception e) {
+        }
+        return response;
+    }
+
+    public String updateLokasiPembeliById(Integer id, Double latitude, Double longitude) {
+        try {
+            url = URL + "?operasi=updatePembeliById&id=" + id + "&latitude=" + latitude + "&longitude=" + longitude;
+            System.out.println("URL Update Lokasi Pembeli By ID : " + url);
             response = call(url);
         } catch (Exception e) {
         }
